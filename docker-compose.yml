@@ -34,8 +34,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   mysql:
-    build:
-      context: ./docker/fievm
+    image: 'mysql:8.0'
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'

@@ -1,4 +1,4 @@
-# Dockerized RedM Server
+# Dockerized FiveM Server
 This repository contains a setup for a dockerized RedM Server that can be fully customized while encuraging git workflow.
 
 # Table of contents

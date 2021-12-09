@@ -1,7 +1,6 @@
 name: Publish
 
 on:
-  workflow_dispatch:
   release:
     types: [published]
 
@@ -48,3 +47,18 @@ jobs:
             skyraptor/fivem:latest
             skyraptor/fivem:${{ env.fivem_build }}
             skyraptor/fivem:${{ env.fivem_build }}-${{ env.build_number }}
+      -
+        name: Tag and push
+        runs: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'noreply@github.com'
+          
+          git tag ${{ env.fivem_build }}-${{ env.build_number }}
+          
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -am "Successfully built image"
+            git push
+          fi
+          
+          git push --tags

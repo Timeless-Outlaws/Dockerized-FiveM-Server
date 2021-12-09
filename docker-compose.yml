@@ -24,7 +24,7 @@ services:
       - '${BIND_IP:-0.0.0.0}:30120:30120'
       - '${BIND_IP:-0.0.0.0}:30120:30120/udp'
     environment:
-      CONFIG_ARGS: '+set gamename rdr3 +set sv_enforceGameBuild 1436 +sets sv_projectName "${SERVER_NAME}" +sets sv_projectDesc "${SERVER_DESC}"'
+      CONFIG_ARGS: '+set gamename ${GAME_NAME} +set sv_enforceGameBuild 1436 +sets sv_projectName "${SERVER_NAME}" +sets sv_projectDesc "${SERVER_DESC}"'
       LICENSE_KEY: ${LICENSE_KEY}
       NO_LICENSE_KEY: ${NO_LICENSE_KEY}
       NO_ONESYNC: ${NO_ONESYNC}
@@ -45,7 +45,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
-      - './mysql:/var/lib/mysql'
+      - './.mysql:/var/lib/mysql'
       - './sql:/docker-entrypoint-initdb.d'
     networks:
       - fivem

@@ -2,7 +2,7 @@
 .env
 
 # Runtime
-/mysql
+/.mysql
 /sql/*.sql
 /cfg/*.cfg
 

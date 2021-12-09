@@ -3,7 +3,7 @@
 services:
   fivem:
     build:
-      context: ./docker/fievm
+      context: ./docker/fivem
       args:
         FIVEM_NUM: ${FIVEM_NUM}
         FIVEM_VER: ${FIVEM_VER}

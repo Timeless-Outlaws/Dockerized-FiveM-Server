@@ -1,0 +1,48 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Clone repository
+        uses: actions/checkout@v2
+      -
+        name: Increase build number
+        run: |
+          export $(cat .env.example | sed 's/#.*//g' | xargs)
+          
+          mkdir -p .github/buildno
+          
+          find .github/buildno ! -name "$FIVEM_NUM" -type f -exec rm -f {} +
+          
+          export BUILD_NUMBER=0
+          if -f ".github/buildno/$FIVEM_NUM"; then
+            export OLD_BUILD_NUMBER=`cut -d ',' -f2 .github/buildno/$FIVEM_NUM`  
+            NEW_BUILD_NUMBER=`expr $OLD_BUILD_NUMBER + 1`
+            sed -i "s/$OLD_BUILD_NUMBER\$/$NEW_BUILD_NUMBER/g" .github/buildno/$FIVEM_NUM
+          else
+            echo "0" > .github/buildno/$FIVEM_NUM
+          fi
+      -
+        name: Build Image
+        run: |
+          export $(cat .env.example | sed 's/#.*//g' | xargs)
+          export BUILD_NUMBER=$(cat .github/buildno/$FIVEM_NUM)
+          
+          docker build docker/fivem/Dockerfile -t skyraptor/fivem:latest -t skyraptor/fivem:$FIVEM_NUM -t skyraptor/fivem:$FIVEM_NUM-$BUILD_NUMBER
+      -
+        name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - 
+        name: Push image
+        run: |
+          export $(cat .env.example | sed 's/#.*//g' | xargs)
+          export BUILD_NUMBER=$(cat .github/buildno/$FIVEM_NUM)
+          
+          docker-push skyraptor/fivem --all-tags

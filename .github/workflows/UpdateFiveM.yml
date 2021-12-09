@@ -1,4 +1,4 @@
-name: AutoUpdate
+name: UpdateFiveM
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: "*/15 * * * *"
 
 jobs:
-  docker:
+  update:
     runs-on: ubuntu-latest
     steps:
       - 

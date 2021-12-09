@@ -1,0 +1,1 @@
+bash install-rsm.sh

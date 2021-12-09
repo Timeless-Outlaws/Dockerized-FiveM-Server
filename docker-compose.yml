@@ -2,12 +2,14 @@
 
 services:
   fivem:
-    build:
-      context: ./docker/fivem
-      args:
-        FIVEM_NUM: ${FIVEM_NUM}
-        FIVEM_VER: ${FIVEM_VER}
-        DATA_VER: ${DATA_VER}
+# Use an image from dockerhub or uncomment and comment image to use local build. Dont forget to rebuild / pull latest if you do not use a image with fivem & docker build number.  
+    image: 'skyraptor/fivem:5061-0'
+#    build:
+#      context: ./docker/fivem
+#      args:
+#        FIVEM_NUM: ${FIVEM_NUM}
+#        FIVEM_VER: ${FIVEM_VER}
+#        DATA_VER: ${DATA_VER}
     container_name: fivem
     restart: always
     stdin_open: true
@@ -34,7 +36,10 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   mysql:
+# Use the offical mysql image or use local build as above
     image: 'mysql:8.0'
+#    build:
+#      context: ./docker/mysql
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'

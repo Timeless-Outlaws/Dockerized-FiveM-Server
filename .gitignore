@@ -2,7 +2,9 @@
 .env
 
 # Runtime
-mysql
+/mysql
+/sql/*.sql
+/cfg/*.cfg
 
 # Default resources
 resources/\[gamemodes\]

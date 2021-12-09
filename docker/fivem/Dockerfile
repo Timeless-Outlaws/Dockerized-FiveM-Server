@@ -35,9 +35,9 @@ ARG FIVEM_VER
 ARG FIVEM_NUM
 ARG DATA_VER
 
-LABEL maintainer="Spritsail <fivem@spritsail.io>" \
-      org.label-schema.vendor="Spritsail" \
-      org.label-schema.name="FiveM" \
+LABEL maintainer="Timeless Outlaws <privat@skyraptor.eu>" \
+      org.label-schema.vendor="Timeless Outlaws" \
+      org.label-schema.name="Dockerized FiveM Server" \
       org.label-schema.url="https://fivem.net" \
       org.label-schema.description="FiveM is a modification for Grand Theft Auto V enabling you to play multiplayer on customized dedicated servers." \
       org.label-schema.version=${FIVEM_NUM} \
@@ -60,4 +60,5 @@ CMD [""]
 
 ENTRYPOINT ["/bin/sh", "-c", "/usr/bin/wait-for-mysql && /sbin/tini -- /usr/bin/entrypoint"]
 
+# Check if the server is alive
 HEALTHCHECK CMD curl --fail http://127.0.0.1:30120/info.json || exit 1

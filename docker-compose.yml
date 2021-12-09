@@ -3,7 +3,7 @@
 services:
   fivem:
     build:
-      context: ./docker
+      context: ./docker/fievm
       args:
         FIVEM_NUM: ${FIVEM_NUM}
         FIVEM_VER: ${FIVEM_VER}
@@ -34,7 +34,8 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   mysql:
-    image: 'mysql:8.0'
+    build:
+      context: ./docker/fievm
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'

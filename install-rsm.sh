@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
+# Directory of the script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # Installs the latest RedM Server Manager on the system. Works for linux (deb) and darwin x64.
-#
-#
 
 function createSymlink() {
   if [ -f "/usr/bin/rsm" ]; then
@@ -18,7 +19,11 @@ function createSymlink() {
 }
 
 # Determine the correct build
-if [[ "$OSTYPE" == "darwin"* ]]; then
+TARGET=/opt/rsm
+if [[ $1 == "windows" ]]; then
+  SNIPPET="-win32-x64.tar.gz"
+  TARGET="$SCRIPT_DIR/rsm" # Install locally on windows
+else if [[ "$OSTYPE" == "darwin"* ]]; then
   SNIPPET="-darwin-x64.tar.gz"
 else
   SNIPPET="-linux-x64.tar.gz"
@@ -34,16 +39,23 @@ TMP=mktmp
 wget -c $URL -C $TMP/rsm.tar.gz
 
 # Remove the old build since we have a new one
-rm -R /opt/rsm
-mkdir /opt/rsm
+rm -R $TARGET
+mkdir $TARGET
 
 # Extract the release to the installation directory
-tar -xz $TMP/rsm.tar.gz -C /opt/rsm
+tar -xz $TMP/rsm.tar.gz -C $TARGET
 
 # Remove TMP
 rm -f -R $TMP
 
-# Link the release
-createSymlink
+# Link only on linux/darwin
+if ! [[ $1 == "windows" ]]; then
+  createSymlink
+fi
 
-echo "Successfully installed rsm! Use it by typing rsm (if you linked /usr/bin/rsm) or /opt/rsm/bin/rsm"
+if [[ $1 == "windows" ]]; then
+  echo "Successfully installed rsm! Use it by running $TARGET/bin/rsm.cmd"
+else
+  echo "Successfully installed rsm! Use it by typing rsm (if you linked /usr/bin/rsm) or $TARGET/bin/rsm"
+fi
+

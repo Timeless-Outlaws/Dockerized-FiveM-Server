@@ -46,12 +46,6 @@ LABEL maintainer="Timeless Outlaws <privat@skyraptor.eu>" \
 
 COPY --from=builder /output/ /
 
-# Install latest npm and nodejs
-RUN apk add --update nodejs npm && \
-    npm install -g npm@latest && \
-    npm i -g n && \
-    n latest
-
 WORKDIR /config
 EXPOSE 30120
 

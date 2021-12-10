@@ -45,6 +45,15 @@ jobs:
             git add .
             git commit -am "Updated FiveM Build & Data"
             git push
+            echo "updated=yes" >> $GITHUB_ENV
           else
             echo "No changes, skipping."
+            echo "updated=no" >> $GITHUB_ENV
           fi
+      -
+        name: Dispatch Publish workflow if there is an update
+        if: s${{ env.action_state }} == 'yes'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Publish
+          token: ${{ secrets.PERSONAL_TOKEN }}

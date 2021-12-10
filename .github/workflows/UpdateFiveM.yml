@@ -35,7 +35,7 @@ jobs:
         run: |
           OUTPUT=$(git ls-remote https://github.com/citizenfx/cfx-server-data.git HEAD)
           COMMIT=$(echo $OUTPUT | grep -oP '(^[\w]*)')
-          sed -i "s/ARG DATA_VER=.*/ARG DATA_VER=$COMMIT/" docker/Dockerfile
+          sed -i "s/ARG DATA_VER=.*/ARG DATA_VER=$COMMIT/" docker/fivem/Dockerfile
       -
         name: Commit the changes
         run: |

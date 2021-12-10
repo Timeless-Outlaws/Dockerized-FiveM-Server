@@ -47,6 +47,7 @@ mkdir "$TARGET/rsm"
 
 # Extract the release to the installation directory
 tar -xz -f $TMP/rsm.tar.gz -C $TARGET
+sudo chown -R $(id -u):$(id -g) $TARGET/rsm
 
 # Remove TMP
 rm -f -R $TMP

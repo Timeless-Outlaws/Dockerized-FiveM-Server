@@ -64,3 +64,6 @@ jobs:
           fi
           
           git push --tags
+      -
+        name: Release the tag
+        uses: softprops/action-gh-release@v1

@@ -30,6 +30,10 @@ fi
 
 # Get the latest release download URL
 URL=$($(which curl) --silent https://api.github.com/repos/Timeless-Outlaws/RedM-Server-Manager/releases | jq -r "sort_by(.tag_name) | [ .[] | select(.draft | not) | select(.prerelease | not) ] | .[-1].assets[].browser_download_url | select(test(\".*${SNIPPET}.*\"))")
+if [ -z "$URL" ]; then
+  echo "There currently is no latest build for rsm, cancelling..."
+  exit 1
+fi
 
 # Create a temporary directory to download the latest build to
 TMP=$(mktemp -d)

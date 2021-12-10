@@ -28,8 +28,8 @@ jobs:
           echo "Extracted commit:  \"$COMMIT\""
           sed -i "s/FIVEM_NUM=.*/FIVEM_NUM=$BUILD/" .env.example
           sed -i "s/FIVEM_VER=.*/FIVEM_VER=$COMMIT/" .env.example
-          sed -i "s/ARG FIVEM_NUM=.*/ARG FIVEM_NUM=$BUILD/" docker/Dockerfile
-          sed -i "s/ARG FIVEM_VER=.*/ARG FIVEM_VER=$COMMIT/" docker/Dockerfile
+          sed -i "s/ARG FIVEM_NUM=.*/ARG FIVEM_NUM=$BUILD/" docker/fivem/Dockerfile
+          sed -i "s/ARG FIVEM_VER=.*/ARG FIVEM_VER=$COMMIT/" docker/fivem/Dockerfile
       -
         name: Get & update CitizenX data
         run: |

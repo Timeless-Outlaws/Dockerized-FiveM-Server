@@ -47,6 +47,9 @@ jobs:
             skyraptor/fivem:${{ env.fivem_build }}
             skyraptor/fivem:${{ env.fivem_build }}-${{ env.build_number }}
       -
+        name: Update docker-compose.yml
+        run: sed -i "s/skyraptor\/fivem:.*/skyraptor\/fivem:${{ env.fivem_build }}-${{ env.build_number }}'/" docker-compose.yml
+      -
         name: Tag and push
         run: |
           git config --global user.name 'GitHub Action'
@@ -56,7 +59,7 @@ jobs:
           
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git commit -am "Successfully built image"
+            git commit -am "Successfully built image & updated docker-compose.yml"
             git push
           fi
           

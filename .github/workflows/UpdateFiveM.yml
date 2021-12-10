@@ -16,7 +16,7 @@ jobs:
           submodules: true
       -
         name: Install RSM
-        run: install-rsm.sh
+        run: ./install-rsm.sh
       -
         name: Get & update FiveM
         run: |

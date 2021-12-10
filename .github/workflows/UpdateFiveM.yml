@@ -52,7 +52,7 @@ jobs:
           fi
       -
         name: Dispatch Publish workflow if there is an update
-        if: s${{ env.action_state }} == 'yes'
+        if: env.updated == 'yes'
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: Publish

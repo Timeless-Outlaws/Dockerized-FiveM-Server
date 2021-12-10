@@ -15,14 +15,12 @@ jobs:
         with:
           submodules: true
       -
-        name: Install required dependencies
-        run: |
-          cd toolchain/latest-version/
-          npm i
+        name: Install RSM
+        run: install-rsm.sh
       -
         name: Get & update FiveM
         run: |
-          OUTPUT=$(node toolchain/latest-version/index.js)
+          OUTPUT=$(rsm build-info)
           echo "Received build info:  \"$OUTPUT\""
           BUILD=$(echo $OUTPUT | grep -oP '(?<=Build: \")[^\"]*')
           echo "Extracted build:  \"$BUILD\""

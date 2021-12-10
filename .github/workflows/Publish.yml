@@ -19,7 +19,7 @@ jobs:
           
           find .github/buildno ! -name "$FIVEM_NUM" -type f -exec rm -f {} +
           
-          if -f ".github/buildno/$FIVEM_NUM"; then
+          if [ -f ".github/buildno/$FIVEM_NUM" ]; then
             export OLD_BUILD_NUMBER=`cut -d ',' -f2 .github/buildno/$FIVEM_NUM`  
             NEW_BUILD_NUMBER=`expr $OLD_BUILD_NUMBER + 1`
             sed -i "s/$OLD_BUILD_NUMBER\$/$NEW_BUILD_NUMBER/g" .github/buildno/$FIVEM_NUM

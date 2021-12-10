@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
+# Installs the latest RedM Server Manager on the system. Works for linux (deb) and darwin x64.
 
 # Directory of the script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-
-# Installs the latest RedM Server Manager on the system. Works for linux (deb) and darwin x64.
 
 function createSymlink() {
   if [ -f "/usr/bin/rsm" ]; then
@@ -58,4 +57,3 @@ if [[ $1 == "windows" ]]; then
 else
   echo "Successfully installed rsm! Use it by typing rsm (if you linked /usr/bin/rsm) or $TARGET/bin/rsm"
 fi
-

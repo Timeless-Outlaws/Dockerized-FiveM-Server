@@ -13,47 +13,48 @@ function createSymlink() {
       exit 0
     fi
   fi
-  
+
   ln -f -s /opt/rsm/bin/rsm /usr/bin/rsm
 }
 
 # Determine the correct build
-TARGET=/opt/rsm
-if [[ $1 == "windows" ]]; then
+TARGET=/opt
+if [[ "$1" == "windows" ]]; then
   SNIPPET="-win32-x64.tar.gz"
-  TARGET="$SCRIPT_DIR/rsm" # Install locally on windows
-else if [[ "$OSTYPE" == "darwin"* ]]; then
+  TARGET="$SCRIPT_DIR" # Install locally on windows
+elif [[ "$OSTYPE" == "darwin"* ]]; then
   SNIPPET="-darwin-x64.tar.gz"
 else
   SNIPPET="-linux-x64.tar.gz"
 fi
 
 # Get the latest release download URL
-URL=curl --silent https://api.github.com/repos/Timeless-Outlaws/RedM-Server-Manager/releases | jq -r "sort_by(.tag_name) | [ .[] | select(.draft | not) | select(.prerelease | not) ] | .[-1].assets[].browser_download_url | select(test(\".*${SNIPPET}.*\"))"
+URL=$($(which curl) --silent https://api.github.com/repos/Timeless-Outlaws/RedM-Server-Manager/releases | jq -r "sort_by(.tag_name) | [ .[] | select(.draft | not) | select(.prerelease | not) ] | .[-1].assets[].browser_download_url | select(test(\".*${SNIPPET}.*\"))")
 
 # Create a temporary directory to download the latest build to
-TMP=mktmp
+TMP=$(mktemp -d)
 
 # Download latest build to the TMP folder
-wget -c $URL -C $TMP/rsm.tar.gz
+wget -c $URL -O $TMP/rsm.tar.gz
 
 # Remove the old build since we have a new one
-rm -R $TARGET
-mkdir $TARGET
+rm -f -R "$TARGET/rsm"
+mkdir "$TARGET/rsm"
 
 # Extract the release to the installation directory
-tar -xz $TMP/rsm.tar.gz -C $TARGET
+tar -xz -f $TMP/rsm.tar.gz -C $TARGET
 
 # Remove TMP
 rm -f -R $TMP
 
 # Link only on linux/darwin
-if ! [[ $1 == "windows" ]]; then
+if ! [[ "$1" == "windows" ]]; then
   createSymlink
 fi
 
-if [[ $1 == "windows" ]]; then
-  echo "Successfully installed rsm! Use it by running $TARGET/bin/rsm.cmd"
+if [[ "$1" == "windows" ]]; then
+  echo "Successfully installed rsm! Use it by running $TARGET/rsm/bin/rsm.cmd"
 else
-  echo "Successfully installed rsm! Use it by typing rsm (if you linked /usr/bin/rsm) or $TARGET/bin/rsm"
+  echo "Successfully installed rsm! Use it by typing rsm (if you linked /usr/bin/rsm) or $TARGET/rsm/bin/rsm"
 fi
+

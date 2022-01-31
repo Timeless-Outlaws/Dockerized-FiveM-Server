@@ -1,5 +1,5 @@
-ARG FIVEM_NUM=5279
-ARG FIVEM_VER=338cabd7aa1b1ded9f5a2c437fa3ea9447cd3eb5
+ARG FIVEM_NUM=5282
+ARG FIVEM_VER=decfd459edc0ead73a4e5d1b9acbcaba2fb4571f
 ARG DATA_VER=44fc68d7ee1b94ad67a211a6ff8234ce4ff760c8
 
 FROM spritsail/alpine:3.14 as builder

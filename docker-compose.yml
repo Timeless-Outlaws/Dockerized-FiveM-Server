@@ -3,7 +3,7 @@
 services:
   fivem:
 # Use an image from dockerhub or uncomment and comment image to use local build. Dont forget to rebuild / pull latest if you do not use a image with fivem & docker build number.  
-    image: 'skyraptor/fivem:8633-0'
+    image: 'skyraptor/fivem:8665-0'
 #    build:
 #      context: ./docker/fivem
 #      args:
